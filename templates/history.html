@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geçmiş Konuşmalar</title>
+</head>
+<body>
+    <h1>Geçmiş Konuşmalar</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Zaman</th>
+                <th>Kullanıcı Mesajı</th>
+                <th>Bot Yanıtı</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user_message, bot_message, timestamp in chat_history %}
+            <tr>
+                <td>{{ timestamp }}</td>
+                <td>{{ user_message }}</td>
+                <td>{{ bot_message }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

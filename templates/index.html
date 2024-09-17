@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gelişmiş AI Chatbot</title>
+</head>
+<body>
+    <h1>Gelişmiş AI Chatbot</h1>
+    <form id="chat-form">
+        <input type="text" id="user-message" placeholder="Mesajınızı yazın..." required>
+        <button type="submit">Gönder</button>
+    </form>
+    <div id="chat-log"></div>
+
+    <h2>Geçmiş Konuşmalar</h2>
+    <button onclick="loadHistory()">Geçmişi Görüntüle</button>
+    <div id="history-log"></div>
+
+    <script>
+        document.getElementById("chat-form").addEventListener("submit", async function(e) {
+            e.preventDefault();
+            const userMessage = document.getElementById("user-message").value;
+            const response = await fetch("/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: `message=${userMessage}`
+            });
+            const data = await response.json();
+            const chatLog = document.getElementById("chat-log");
+            chatLog.innerHTML += `<p><strong>Sen:</strong> ${userMessage}</p>`;
+            chatLog.innerHTML += `<p><strong>Bot:</strong> ${data.message}</p>`;
+        });
+
+        async function loadHistory() {
+            const response = await fetch("/history");
+            const data = await response.text();
+            document.getElementById("history-log").innerHTML = data;
+        }
+    </script>
+</body>
+</html>
